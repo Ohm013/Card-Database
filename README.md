@@ -1,5 +1,11 @@
 # Card-Database
 ![database_home](https://github.com/user-attachments/assets/66d3b08f-63f2-4eb2-8537-262f26133b1f)
+![cards_page](https://github.com/user-attachments/assets/5f25f695-8cd3-43cd-b599-4deefd8b0c12)
+![order_details_page](https://github.com/user-attachments/assets/e8a8a0cd-77e5-4cac-acf3-cceac5c3991d)
+![sets_page](https://github.com/user-attachments/assets/13661eef-abb5-41bf-83ac-a751fe4dbc00)
+![orders_page](https://github.com/user-attachments/assets/bdf2c218-90e5-454c-9ffb-6fc59ae9f23e)
+![customers_page](https://github.com/user-attachments/assets/d617e7d4-6459-4850-bda9-bc97a795e12c)
+
 
 This is a full-stack web application for managing Pokémon cards, sets, customers, and orders. The app is built using **Node.js**, **Express**, **MySQL**, and **Handlebars**, and allows full **CRUD operations** for all data entities through a structured admin interface.
 
