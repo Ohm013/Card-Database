@@ -52,19 +52,15 @@ DB_NAME=pokemon_db
 Start the Server
 
 bash
-Copy
-Edit
 npm start
 Open your browser and navigate to:
 
 arduino
-Copy
-Edit
+
 http://localhost:3000
 Folder Structure
 pgsql
-Copy
-Edit
+
 pokemon-database/
 ├── controllers/
 ├── models/
@@ -98,11 +94,5 @@ License
 This project is licensed under the MIT License.
 
 Made with ❤️ for learning and fun
-
-yaml
-Copy
-Edit
-
----
 
 Let me know if you want to include screenshots, deploy it on something like Heroku or Vercel, or add a live 
