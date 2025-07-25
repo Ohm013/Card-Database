@@ -1,0 +1,169 @@
+{{!-- 
+  #Citation for the following code:
+  # Date: 5/07/2025
+  # scope: frontend views using handlebars Templating
+  # originality: Adapted from starter code Building our webpage with Handlebars Templating Engine.
+  # Exploration - Web Application Technology
+  # Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948 --}}
+<h1>Cards</h1>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! For the table header row, we print the DB attribute names }}
+        <tr>
+            <th>Card ID</th>
+            <th>Card Name</th>
+            <th>Set ID</th>
+            <th>Rarity</th>
+            <th>Card Condition</th>
+            <th>Card Type</th>
+            <th>Price</th>
+            <th>Delete Entry</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the card information }}
+        {{#each cards}}
+        <tr>
+            <td>{{this.card_id}}</td>
+            <td>{{this.name}}</td>
+            <td>{{this.set_id}}</td>
+            <td>{{this.rarity}}</td>
+            <td>{{this.condition}}</td>
+            <td>{{this.type}}</td>
+            <td>$ {{this.price}}</td>
+
+            {{! DELETE form }}
+            <form id='delete_card_form' method='POST' action='/pokemon_cards/delete'>
+                <input type='hidden' name='delete_card_id' value='{{this.card_id}}' />
+                <td>
+                    <button type='submit'>
+                        Delete
+                    </button>
+                </td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! CREATE form }}
+<h2>Add a new Card</h2>
+<form class='cuForm' id='create_card_form' method='POST' action='/pokemon_cards'>
+    <label for='card_name'>Card Name: </label>
+    <input type='text' name='card_name' id='card_name' required />
+
+    <label for='card_rarity'>Rarity: </label>
+    <select name='card_rarity' id='card_rarity'>
+        <option value='Common' selected>Common</option>
+        <option value='Uncommon' >Uncommon</option>
+        <option value='Rare' >Rare</option>
+        <option value='Ultra Rare' >Ultra Rare</option>
+        <option value='Secret Rare' >Secret Rare</option>
+    </select>
+
+    <label for='card_condition'>Condition: </label>
+    <select name='card_condition' id='card_condition'>
+        <option value='Mint' selected>Mint</option>
+        <option value='Near Mint' >Near Mint</option>
+        <option value='Good' >Good</option>
+        <option value='Fair' >Fair</option>
+        <option value='Poor' >Poor</option>
+    </select>
+
+    <label for='card_type'>Type: </label>
+    <select name='card_type' id='card_type'>
+        <option value='Fire' selected>Fire</option>
+        <option value='Water' >Water</option>
+        <option value='Electric' >Electric</option>
+        <option value='Grass' >Grass</option>
+        <option value='Psychic' >Psychic</option>
+        <option value='Fighting' >Fighting</option>
+        <option value='Dark' >Dark</option>
+        <option value='Fairy' >Fairy</option>
+        <option value='Metal' >Metal</option>
+        <option value='Dragon' >Dragon</option>
+        <option value='Normal' >Normal</option>
+    </select>
+
+    <label for='card_price'>Price: </label>
+    <input type='number' name='card_price' id='card_price' min='0' />
+
+    <label for='set_id'>Set: </label>
+    <select name='set_id' id='set_id'>
+        <option value='NULL' selected>Select a Set</option>
+        <option value='NULL'>&lt; None &gt;</option>
+        {{#each sets}}
+        <option value='{{this.set_id}}' required>{{this.set_name}}</option>
+        {{/each}}
+    </select>
+
+    <input type='submit' value="Add Card" />
+</form>
+
+{{! UPDATE form }}
+<h2>Update a Card</h2>
+<form class='cuForm' id='update_card_form' method='POST' action='/pokemon_cards/update'>
+    <label for='update_card_id'>Card to Update: </label>
+    <select name='update_card_id' id='update_card_id' required>
+        <option value='' disabled selected>Select a Card</option>
+        {{#each cards}}
+        <option value='{{this.card_id}}' required>
+            {{this.name}}
+            -
+            {{this.rarity}}
+        </option>
+        {{/each}}
+    </select>
+
+    <label for='update_card_name'>New Name: </label>
+    <input type='text' name='update_card_name' id='update_card_name' required/>
+
+    <label for='update_card_rarity'>New Rarity: </label>
+    <select name='update_card_rarity' id='update_card_rarity'>
+        <option value='Common' selected>Common</option>
+        <option value='Uncommon' >Uncommon</option>
+        <option value='Rare' >Rare</option>
+        <option value='Ultra Rare' >Ultra Rare</option>
+        <option value='Secret Rare' >Secret Rare</option>
+    </select>
+
+    <label for='update_card_condition'>New Condition: </label>
+    <select name='update_card_condition' id='update_card_condition'>
+        <option value='Mint' selected>Mint</option>
+        <option value='Near Mint' >Near Mint</option>
+        <option value='Good' >Good</option>
+        <option value='Fair' >Fair</option>
+        <option value='Poor' >Poor</option>
+    </select>
+
+    <label for='update_card_type'>New Type: </label>
+        <select name='update_card_type' id='update_card_type'>
+        <option value='Fire' selected>Fire</option>
+        <option value='Water' >Water</option>
+        <option value='Electric' >Electric</option>
+        <option value='Grass' >Grass</option>
+        <option value='Psychic' >Psychic</option>
+        <option value='Fighting' >Fighting</option>
+        <option value='Dark' >Dark</option>
+        <option value='Fairy' >Fairy</option>
+        <option value='Metal' >Metal</option>
+        <option value='Dragon' >Dragon</option>
+        <option value='Normal' >Normal</option>
+    </select>
+
+    <label for='update_card_price'>New Price: </label>
+    <input type='number' name='update_card_price' id='update_card_price' min='0' />
+
+    <label for='update_card_set'>New Set: </label>
+    <select name='update_card_set' id='update_card_set'>
+        <option value='' disabled selected>Select a Set</option>
+        {{#each sets}}
+        <option value='{{this.set_id}}'>{{this.set_name}}</option>
+        {{/each}}
+    </select>
+
+    <input type='submit' value="Update Card"/>
+</form>

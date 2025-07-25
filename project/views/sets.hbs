@@ -1,0 +1,72 @@
+{{!-- 
+  #Citation for the following code:
+  # Date: 5/07/2025
+  # scope: frontend views using handlebars Templating
+  # originality: Adapted from starter code Building our webpage with Handlebars Templating Engine.
+  # Exploration - Web Application Technology
+  # Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948 --}}
+
+<h1>Sets</h1>
+
+{{! READ table }}
+<table>
+    <thead>
+        {{! For the table header row, we print the DB attribute names }}
+        <tr>
+            <th>Set ID</th>
+            <th>Set Name</th>
+            <th>Release Date</th>
+            
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the id, fname, lname, homeworld and age }}
+        {{#each sets}}
+        <tr>
+            <td>{{this.set_id}}</td>
+            <td>{{this.set_name}}</td>
+            <td>{{formatDate this.release_date}}</td>
+
+            {{! DELETE form }}
+
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! CREATE form }}
+<h2>Add a New Set</h2>
+<form class='cuForm' id='create_set_form' method='POST' action='/sets/create'>
+    <label for='set_name'>Set Name: </label>
+    <input type='text' name='set_name' id='set_name' required />
+
+    <label for='release_date'>Release Date: </label>
+    <input type='date' name='release_date' id='release_date' />
+
+    <input type='submit' value="Add a set" />
+</form>
+
+{{! UPDATE form }}
+<h2>Update a Set</h2>
+<form class='cuForm' id='update_set_form' method='POST' action='/sets/update'>
+    <label for='update_set_id'>Set to Update: </label>
+    <select name='update_set_id' id='update_set_id' required>
+        <option value='' disabled selected>Select a Set</option>
+        {{#each sets}}
+        <option value='{{this.set_id}}' required>
+            {{this.set_id}}
+            -
+            {{this.set_name}}
+        </option>
+        {{/each}}
+    </select>
+
+    <label for='update_set_name'>New Set Name: </label>
+    <input type='text' name='update_set_name' id='update_set_name' />
+
+    <label for='update_release_date'>New Release Date: </label>
+    <input type='date' name='update_release_date' id='update_release_date' />
+
+    <input type='submit' value="Update Set"/>
+</form>

@@ -1,0 +1,81 @@
+{{!-- 
+  #Citation for the following code:
+  # Date: 5/07/2025
+  # scope: frontend views using handlebars Templating
+  # originality: Adapted from starter code Building our webpage with Handlebars Templating Engine.
+  # Exploration - Web Application Technology
+  # Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948 --}}
+
+<h1>Order Details</h1>
+ {{!-- This is a join table --}}
+{{! READ table }}
+<p>A join table which represents an M:M relationship between order and cards. Each order can have multiple cards, and each card could appear on many orders</p>
+<table>
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Card ID</th>
+            <th>Card Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {{#each orders_cards}}
+        <tr>
+            <td>{{this.order_id}}</td>
+            <td>
+                {{#if this.card_id}}
+                    {{this.card_id}}
+                {{else}}
+                    <em>NULL</em>
+                {{/if}}
+            </td>
+            <td>
+                {{#if this.card_name}}
+                    {{this.card_name}}
+                {{else}}
+                    <em>DELETED</em>
+                {{/if}}
+            </td>
+            <td>$ {{this.price}}</td>
+            <td>{{this.quantity}}</td>
+            <td>$ {{this.total}}</td>
+
+            {{! DELETE form }}
+
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+
+
+{{! UPDATE form }}
+<h2>Update a Order-Card entry</h2>
+<form class='cuForm' id='update_order_card_form' method='POST' action='/orders_cards/update'>
+    <label for='update_order_card_id'>Order to Update: </label>
+    <select name='update_order_card_id' id='update_order_card_id' required>
+        <option value='' disabled selected>Select an Order</option>
+        {{#each orders_cards}}
+        <option value='{{this.order_card_id}}' required>
+            Entry #{{this.order_card_id}} Order #{{this.order_id}} - {{this.card_name}}
+        </option>
+        {{/each}}
+    </select>
+
+    <label for='update_card_id'>Card: </label>
+    <select name='update_card_id' id='update_card_id'>
+        <option value='' disabled selected>Select a Card</option>
+        {{#each cards}}
+        <option value='{{this.card_id}}' required>
+            {{this.name}} - ${{this.price}}
+        </option>
+        {{/each}}
+    </select>
+
+
+    <input type='submit' value="Update order-card"/>
+</form>

@@ -1,0 +1,124 @@
+{{!-- 
+  #Citation for the following code:
+  # Date: 5/07/2025
+  # scope: frontend views using handlebars Templating
+  # originality: Adapted from starter code Building our webpage with Handlebars Templating Engine.
+  # Exploration - Web Application Technology
+  # Source URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948 --}}
+
+<h1>Orders</h1>
+{{! READ table }}
+<table>
+    <thead>
+        {{! For the table header row, we print the DB attribute names }}
+        <tr>
+            <th>Order ID</th>
+            <th>Customer ID</th>
+            <th>Order Date</th>
+            <th>Quantity</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Delete Entry</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{! For each row, print the id, fname, lname, homeworld and age }}
+        {{#each orders}}
+        <tr>
+            <td>{{this.order_id}}</td>
+            <td>
+                {{#if this.customer_id}}
+                    {{this.customer_id}}
+                {{else}}
+                    <em>NULL</em>
+                {{/if}}
+            </td>
+            <td>{{formatDate this.order_date}}</td>
+            <td>{{this.quantity}}</td>
+            <td>{{#if this.first_name}}
+                    {{this.first_name}}
+                {{else}}
+                    <em>Deleted</em>
+                {{/if}}
+            </td>
+            <td>
+                {{#if this.last_name}}
+                    {{this.last_name}}
+                {{else}}
+                    <em>Deleted</em>
+                {{/if}}
+            </td>
+           
+          
+            {{! DELETE form }}
+            <form id='delete_order_form' method='POST' action='/orders/delete'>
+                <input type='hidden' name='delete_order_id' value='{{this.order_id}}' />
+                <td>
+                    <button type='submit'>
+                        Delete
+                    </button>
+                </td>
+            </form>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+{{! CREATE form }}
+<h2>Create a New Order</h2>
+<form class='cuForm' id='create_order_form' method='POST' action='/orders/create'>
+    <label for='customer_id'>Select Customer: </label>    
+    <select name='customer_id' id='customer_id'>
+        <option value='NULL' disabled selected>Select a Customer</option>
+        {{#each customers}}
+        <option value='{{this.customer_id}}' required>{{this.first_name}} {{this.last_name}}</option>
+        {{/each}}
+    </select>
+
+    <label for='order_date'>Order Date: </label>
+    <input type='date' name='order_date' id='order_date' />
+
+    <label for='card_id'>Select Card: </label>    
+    <select name='card_id' id='card_id'>
+        {{#each cards}}
+        <option value='{{this.card_id}}' required>{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for='quantity'>Quantity:</label>
+    <input type='number' name='quantity' id='quantity' min='0' />
+
+    <input type='submit' value="Add Order"/>
+</form>
+
+{{! UPDATE form }}
+<h2>Update an Order</h2>
+<form class='cuForm' id='update_order_form' method='POST' action='/orders/update'>
+    <label for='update_order_card_id'>Order to Update: </label>
+    <select name='update_order_card_id' id='update_order_card_id' required>
+        <option value='' disabled selected>Select an Order</option>
+        {{#each orders_cards}}
+        <option value='{{this.order_card_id}}' required>
+            Order #{{this.order_id}}
+            -
+            {{this.first_name}} {{this.last_name}} - {{this.card_name}}
+        </option>
+        {{/each}}
+    </select>
+
+    <label for='update_order_date'>New Order Date: </label>
+    <input type='date' name='update_order_date' id='update_order_date' min='0' />
+
+    <label for='update_card_id'>Select Card: </label>    
+    <select name='update_card_id' id='update_card_id'>
+        {{#each cards}}
+        <option value='{{this.card_id}}' required>{{this.name}}</option>
+        {{/each}}
+    </select>
+
+    <label for='update_quantity'>Update Quantity: </label>
+    <input type='number' name='update_quantity' id='update_quantity' min='0' />
+
+    <input type='submit' value="Update Order"/>
+</form>
